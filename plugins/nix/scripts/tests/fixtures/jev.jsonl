@@ -1,0 +1,6 @@
+{"type":"user","timestamp":"2026-10-05T10:00:00.000Z","message":{"role":"user","content":"hi"}}
+not json at all
+{"type":"system","subtype":"compact_boundary","timestamp":"2026-10-05T10:20:00.000Z","compactMetadata":{"trigger":"manual","preTokens":200000,"durationMs":6000}}
+{"type":"user","timestamp":"2026-10-05T10:20:10.000Z","message":{"role":"user","content":"original kept message"}}
+{"type":"assistant","timestamp":"2026-10-05T10:21:00.000Z","message":{"role":"assistant","usage":{"input_tokens":0,"cache_read_input_tokens":0,"cache_creation_input_tokens":70000}}}
+{"type":"system","subtype":"compact_boundary","timestamp":"2026-10-05T10:50:00.000Z","compactMetadata":{"trigger":"auto","preTokens":150000}}

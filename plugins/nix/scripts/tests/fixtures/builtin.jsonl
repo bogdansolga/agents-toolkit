@@ -1,0 +1,5 @@
+{"type":"user","timestamp":"2026-10-05T10:00:00.000Z","message":{"role":"user","content":"hi"}}
+{"type":"system","subtype":"compact_boundary","timestamp":"2026-10-05T10:30:00.000Z","compactMetadata":{"trigger":"auto","preTokens":100000,"durationMs":60000}}
+{"type":"user","isCompactSummary":true,"timestamp":"2026-10-05T10:31:00.000Z","message":{"role":"user","content":"This session is being continued"}}
+{"type":"assistant","timestamp":"2026-10-05T10:32:00.000Z","message":{"role":"assistant","usage":{"input_tokens":1000,"cache_read_input_tokens":30000,"cache_creation_input_tokens":9000}}}
+{"type":"assistant","timestamp":"2026-10-05T11:40:00.000Z","message":{"role":"assistant","usage":{"input_tokens":5,"cache_read_input_tokens":90000,"cache_creation_input_tokens":0}}}
