@@ -22,14 +22,19 @@ RULES:
 - Stay inside FOLDER. Do not edit ongoing-tasks.md or write handoffs; the orchestrator does that.
 - Jira: use the nix:jira skill (jira.sh, source ~/.config/nix/jira.env in the same shell call).
   Google: use the nix:google skill (gdocs.sh / gsheet.sh / gslides.sh / gdrive.sh), first arg always `nix`.
-  READ ONLY. Never comment, transition, edit or create in Jira or Google: put the write you would make under PROPOSED WRITES.
+- WRITES ALLOWED in scope: <files/issues in the task's Links, plus copies you create for this step>.
+  - Before editing an existing Google file: snapshot it (`gdrive.sh nix copy <id> --name "[Backup <date>] <title>"`), re-read the part you edit right before editing.
+  - Put batch payloads in files and pass them as `@file.json`; check each reply (e.g. `occurrencesChanged`) to confirm every edit landed.
+  - Never: delete files or issues, change sharing/permissions, post or reply to comments, send anything to a client, write outside scope. Put those under PROPOSED WRITES instead.
+  - Follow any stricter rules in the latest handoff (it wins over this list).
 - Never print tokens. Do not commit or push unless STEP says so.
 - If the step turns out bigger or unclear, stop and report it under BLOCKERS instead of guessing.
 
 RETURN (at most ~15 lines, no preamble):
 CHANGED: paths, commits, doc ids
+WRITES DONE: each Jira/Confluence/Google write: target id → what changed; snapshot ids
 VERIFIED: command → result
-PROPOSED WRITES: Jira/Google writes for the user to approve, or "none"
+PROPOSED WRITES: out-of-scope or never-list writes for the user to approve, or "none"
 NEXT: the suggested next step
 BLOCKERS: or "none"
 ```

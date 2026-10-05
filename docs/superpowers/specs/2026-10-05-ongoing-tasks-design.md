@@ -14,7 +14,7 @@ One skill that keeps a small set of N-iX work tasks moving across many folders a
 - The tasks file stays minimal, but each task block carries enough state to resume in a new session from the block plus the latest handoff.
 - The skill lives in the `nix` plugin of `claude-config`, so both profiles (`~/.claude`, `~/.claude-nix`) load it.
 - Jev is measured from session transcripts by a script; no extra hook.
-- Jira and Google access always uses the `nix` profile, through the plugin's `nix:jira` and `nix:google` skills.
+- Jira and Google access always uses the `nix` profile, through the plugin's `nix:jira` and `nix:google` skills. Subagents write in-scope Google/Jira/Confluence content (amended 2026-10-05).
 
 ## 1. The tasks file
 
@@ -78,7 +78,7 @@ A new session reads the task block and the latest handoff, and nothing else, bef
 4. **Check links** (cheap reads only): for each active task with a Jira key, `jira.sh get` its status and due date and flag drift against the block.
 5. **Plan the round.** Sort by priority. Classify each active task's Next step:
    - *dispatchable*: small, independent, verifiable (a fix, a doc, research, a data pull);
-   - *deep*: needs design, a judgement call, or the user.
+   - *deep*: needs design, a judgement call, or the user. In-scope Google/Jira writes are dispatchable.
 6. **Dispatch** dispatchable steps in a single message, one subagent per task, at most 4 per round; the lowest-priority steps wait. Code-changing steps use `isolation: "worktree"` when the folder is a git repo. Each subagent gets the prompt in `references/dispatch.md`.
 7. **Verify, then record.** Check each subagent claim against the diff, test output or fetched data. Update the task blocks, write a short-form handoff for each task that moved, append the stats rows to the pilot log.
 8. **Report** a table sorted by priority: task, priority · days, what moved, what needs the user, and for deep tasks the exact command to run (`/nix:ongoing-tasks 3`).
@@ -106,12 +106,14 @@ Both come from this plugin and always use the `nix` profile:
 - **Jira**: the `nix:jira` skill and `${CLAUDE_PLUGIN_ROOT}/scripts/jira.sh`, with `~/.config/nix/jira.env` sourced in the same shell call.
 - **Google**: the `nix:google` skill and `${CLAUDE_PLUGIN_ROOT}/scripts/gdocs.sh`, `gsheet.sh`, `gslides.sh`, `gdrive.sh`, always with `nix` as the first argument. Never `personal`.
 
-Rules:
+Rules (amended 2026-10-05: Google, Jira and Confluence are a main deliverable surface, so subagents write too):
 
-- Reads (issue status, comments, document text) are allowed in both modes and in subagents.
-- Writes (Jira comments, transitions, field changes, new issues; Google doc edits) are outward-facing: propose them and wait for the user's yes. A subagent never writes to Jira or Google; it returns the proposed write for the orchestrator to present.
+- In scope, no extra approval: files and issues in the task's Links, and copies created for the step. Snapshot an existing Google file before editing it, re-read right before each edit, confirm each batch landed.
+- Needs the user's yes: deletes, sharing/permission changes, posting or replying to comments, anything sent to a client, writes outside the task's scope.
+- A task's latest handoff may set stricter rules; they win.
+- Every write and snapshot is logged in the handoff with its id; subagents return them under WRITES DONE.
+- Confluence: `jira.sh` accepts `CONFLUENCE_*`; a dedicated script is added when the first Confluence task needs it.
 - Tokens are never printed.
-- The dispatch prompt names the two skills and the `nix` profile so subagents use them without rediscovering auth.
 
 ## 5. Handoffs
 
@@ -169,7 +171,7 @@ scripts/
 
 ### Dispatch prompt (summary)
 
-Given to each subagent: the task block, the latest handoff path, the exact step, how to verify it, the folder, the worktree note, and the Jira/Google rules from section 4. Required return, at most about 15 lines: what changed (paths, commits), verification command and result, proposed Jira/Google writes if any, suggested next step, blockers.
+Given to each subagent: the task block, the latest handoff path, the exact step, how to verify it, the folder, the worktree note, and the Jira/Google rules from section 4. Required return, at most about 15 lines: what changed (paths, commits), writes done with ids and snapshots, verification command and result, proposed out-of-scope writes if any, suggested next step, blockers.
 
 ## 8. Install and testing
 
