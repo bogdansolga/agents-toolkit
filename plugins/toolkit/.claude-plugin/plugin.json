@@ -1,0 +1,17 @@
+{
+  "name": "toolkit",
+  "version": "2.0.0",
+  "description": "Bogdan's Claude Code toolkit for both profiles: ongoing-tasks, google, jira, ste100-80; git, handoff, pr and sync commands. The active profile's env picks the Google, Jira, Git and task-hub identity.",
+  "author": {
+    "name": "Bogdan Solga",
+    "email": "bogdan.solga@gmail.com"
+  },
+  "keywords": [
+    "tasks",
+    "handoffs",
+    "google",
+    "jira",
+    "git",
+    "writing"
+  ]
+}

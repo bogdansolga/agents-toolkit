@@ -1,16 +1,16 @@
 ---
 name: ongoing-tasks
-description: "Use to review, extend and continue the N-iX ongoing tasks in the hub IdeaProjects/active/nix (index ongoing-tasks.md, one folder per task under clients/<presales|upsales>/<active|inactive>/<Client>/ or internal/<service>/): triage the index, add tasks, archive stale docs (7-day rolling window), delegate work to per-task agents, or run a focused deep session on one task, with handoffs and Jev compaction stats. Trigger on /nix:ongoing-tasks, 'continue the nix tasks', 'add a task', or 'work on task N'."
+description: "Use to review, extend and continue the N-iX ongoing tasks in the hub IdeaProjects/active/nix (index ongoing-tasks.md, one folder per task under clients/<presales|upsales>/<active|inactive>/<Client>/ or internal/<service>/): triage the index, add tasks, archive stale docs (7-day rolling window), delegate work to per-task agents, or run a focused deep session on one task, with handoffs and Jev compaction stats. Trigger on /ongoing-tasks, 'continue the nix tasks', 'add a task', or 'work on task N'."
 argument-hint: "[task number] [path to the index]"
 ---
 
-# nix:ongoing-tasks
+# ongoing-tasks
 
 Keeps N-iX tasks moving across clients, folders and sessions. Goals, in order: reliable high-quality results; parallel work where it is easy; low token use and elapsed time.
 
 ## The Hub
 
-- **Hub:** `/Volumes/NVMe/Development/IdeaProjects/active/nix`. Start Claude Code there; its `CLAUDE.md` holds the standing rules.
+- **Hub:** `$TASKS_HUB`, set in the profile's `settings.json` `env` (work: `/Volumes/NVMe/Development/IdeaProjects/active/nix`). If it is unset, say this profile has no task hub and stop. Start Claude Code in the hub; its `CLAUDE.md` holds the standing rules.
 - **Index:** `ongoing-tasks.md`. One table row per task, plus the Done list. An argument ending in `.md` overrides it.
 - **Contexts:** every task is a client task (`clients/<presales|upsales>/<active|inactive>/<Client>/`, almost always active) or an internal one. Every engagement is placed on the N-iX AI Delivery Model (L1-L5) as APEX Acceleration (L1/L2 → L3) or APEX Transformation (L3 → L4), with services within both. `references/contexts.md` holds the level summaries, the domains and the services; read it before adding a task, instead of the deck.
 - **Task folder:** `clients/<presales|upsales>/<active|inactive>/<Client>/0N-<slug>/` or `internal/<service>/0N-<slug>/`. It holds `task.md` (the full block), `handoffs/`, `docs/`, `docs/archive/` and `agent.md`.
@@ -71,7 +71,7 @@ Several sessions may run at once.
 
 ## Jira and Google
 
-Always through this plugin, always the `nix` profile: the `nix:jira` skill (`source ~/.config/nix/jira.env` in the same shell call) and the `nix:google` skill (`gdocs.sh | gsheet.sh | gslides.sh | gdrive.sh`, first argument `nix`).
+Always through this plugin's `jira` and `google` skills. The profile's env picks the account (`JIRA_ENV`, `GOOGLE_PROFILE`); never pass or switch a profile.
 
 - **In scope, no extra approval:** files and issues listed in `task.md` Links, and copies made for the step. Snapshot an existing Google file before editing it, re-read before each edit, and render to check each batch.
 - **Needs the user's yes:** deletes, sharing changes, comments, anything sent to a client, any write outside the task's scope.

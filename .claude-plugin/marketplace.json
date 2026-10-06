@@ -1,13 +1,14 @@
 {
-  "name": "nix-config",
+  "name": "bogdansolga",
   "owner": {
     "name": "Bogdan Solga"
   },
   "plugins": [
     {
-      "name": "nix",
-      "source": "./plugins/nix",
-      "description": "N-iX toolkit: Jira, Google Docs/Sheets/Drive, ongoing-tasks workflow, git-with-nix-identity"
+      "name": "toolkit",
+      "source": "./plugins/toolkit",
+      "description": "Ongoing tasks, Google, Jira, STE writing; git, handoff, pr and sync commands. One plugin for every profile."
     }
-  ]
+  ],
+  "description": "Bogdan Solga's Claude Code toolkit: one plugin for every profile."
 }
