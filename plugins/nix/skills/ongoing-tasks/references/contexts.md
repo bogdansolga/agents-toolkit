@@ -54,9 +54,8 @@ The service list is a first draft and will be refined with the user. Update this
 
 ## Internal
 
-`internal/0N-<slug>/`: tasks that build N-iX assets, each serving one service above.
+`internal/<service>/0N-<slug>/`: tasks that build N-iX assets, each serving one service above.
 
-**Proposed layout, not applied:** `internal/<service>/0N-<slug>/`. It would move 04 and 07 to `aws-funding/` and 06 to `delivery-model/`. Apply it only on the user's yes; a move also means updating the index, the Claude history keys and every hub-relative path.
 
 ## Recording It
 

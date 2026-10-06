@@ -10,7 +10,7 @@ Updated: 2026-10-06
 | # | Task | Folder | Due | Prio | Status |
 |---|------|--------|-----|------|--------|
 | 1 | Short title | `clients/presales/active/UTA/01-context-layer` | ~2026-10-10 |  | active |
-| 4 | Short title | `internal/04-apex-funding` | 2026-10-14 | P1 | todo |
+| 4 | Short title | `internal/aws-funding/04-apex-funding` | 2026-10-14 | P1 | todo |
 
 ## Done
 
@@ -19,7 +19,7 @@ Updated: 2026-10-06
 
 ## The Task Folder
 
-`clients/<presales|upsales>/<active|inactive>/<Client>/0N-<slug>/` (the client's real name, no spaces) or `internal/0N-<slug>/`. `references/contexts.md` says which context and domain a task belongs to:
+`clients/<presales|upsales>/<active|inactive>/<Client>/0N-<slug>/` (the client's real name, no spaces) or `internal/<service>/0N-<slug>/`. `references/contexts.md` says which context, domain and service a task belongs to:
 
 ```
 task.md          the full block (below)
