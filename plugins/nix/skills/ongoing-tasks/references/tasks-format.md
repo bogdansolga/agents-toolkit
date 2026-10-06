@@ -9,7 +9,7 @@ Updated: 2026-10-06
 
 | # | Task | Folder | Due | Prio | Status |
 |---|------|--------|-----|------|--------|
-| 1 | Short title | `clients/UTA/01-context-layer` | ~2026-10-10 |  | active |
+| 1 | Short title | `clients/presales/active/UTA/01-context-layer` | ~2026-10-10 |  | active |
 | 4 | Short title | `internal/04-apex-funding` | 2026-10-14 | P1 | todo |
 
 ## Done
@@ -19,7 +19,7 @@ Updated: 2026-10-06
 
 ## The Task Folder
 
-`clients/<Client>/0N-<slug>/` (the client's real name, no spaces) or `internal/0N-<slug>/`:
+`clients/<presales|upsales>/<active|inactive>/<Client>/0N-<slug>/` (the client's real name, no spaces) or `internal/0N-<slug>/`. `references/contexts.md` says which context and domain a task belongs to:
 
 ```
 task.md          the full block (below)
@@ -39,6 +39,7 @@ Deliverables (code, repos, decks) stay where they live: in client repos, under `
 <!-- Paths are relative to this task folder; paths starting with clients/, internal/ or projects/ are relative to the hub. -->
 
 - **Goal:** one line, the outcome.
+- **Engagement:** `Acceleration (L2 → L3)` or `Transformation (L3 → L4)`, then ` · service: <slug>` (references/contexts.md).
 - **Done when:** one line, a checkable condition.
 - **Links:** Google ids or URLs, repos, Jira keys, `docs/...`.
 - **Living:** change logs that are never archived (optional).

@@ -1,6 +1,6 @@
 ---
 name: ongoing-tasks
-description: "Use to review, extend and continue the N-iX ongoing tasks in the hub IdeaProjects/active/nix (index ongoing-tasks.md, one folder per task under clients/<Client>/ or internal/): triage the index, add tasks, archive stale docs (7-day rolling window), delegate work to per-task agents, or run a focused deep session on one task, with handoffs and Jev compaction stats. Trigger on /nix:ongoing-tasks, 'continue the nix tasks', 'add a task', or 'work on task N'."
+description: "Use to review, extend and continue the N-iX ongoing tasks in the hub IdeaProjects/active/nix (index ongoing-tasks.md, one folder per task under clients/<presales|upsales>/<active|inactive>/<Client>/ or internal/, by domain): triage the index, add tasks, archive stale docs (7-day rolling window), delegate work to per-task agents, or run a focused deep session on one task, with handoffs and Jev compaction stats. Trigger on /nix:ongoing-tasks, 'continue the nix tasks', 'add a task', or 'work on task N'."
 argument-hint: "[task number] [path to the index]"
 ---
 
@@ -12,7 +12,8 @@ Keeps N-iX tasks moving across clients, folders and sessions. Goals, in order: r
 
 - **Hub:** `/Volumes/NVMe/Development/IdeaProjects/active/nix`. Start Claude Code there; its `CLAUDE.md` holds the standing rules.
 - **Index:** `ongoing-tasks.md`. One table row per task, plus the Done list. An argument ending in `.md` overrides it.
-- **Task folder:** `clients/<Client>/0N-<slug>/` or `internal/0N-<slug>/`. It holds `task.md` (the full block), `handoffs/`, `docs/`, `docs/archive/` and `agent.md`.
+- **Contexts:** every task is a client task (`clients/<presales|upsales>/<active|inactive>/<Client>/`, almost always active) or an internal one. Every engagement is placed on the N-iX AI Delivery Model (L1-L5) as APEX Acceleration (L1/L2 → L3) or APEX Transformation (L3 → L4), with services within both. `references/contexts.md` holds the level summaries, the domains and the services; read it before adding a task, instead of the deck.
+- **Task folder:** `clients/<presales|upsales>/<active|inactive>/<Client>/0N-<slug>/` or `internal/0N-<slug>/`. It holds `task.md` (the full block), `handoffs/`, `docs/`, `docs/archive/` and `agent.md`.
 - **Pilot log:** `ongoing-tasks-pilot.md`. Its Decisions table binds this skill; read it on every run.
 - **Formats:** `references/tasks-format.md` (index, task.md, priority). Read it before the first edit in a session.
 
