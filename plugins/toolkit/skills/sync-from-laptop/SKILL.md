@@ -1,11 +1,12 @@
 ---
-command: sync:from-laptop
-description: Pull the current project from the laptop dev box back to this machine, resolving the laptop by hostname (no hardcoded IP)
+name: sync-from-laptop
+description: "Pull the current project from the laptop dev box back to this machine, resolving the laptop by hostname (no hardcoded IP)"
+disable-model-invocation: true
 ---
 
 # Sync project ← laptop
 
-Pull the **current git project** **from the laptop** back to this machine — the inverse of `/sync:to-laptop`.
+Pull the **current git project** **from the laptop** back to this machine — the inverse of `/sync-to-laptop`.
 
 ## Peer registry (resolve by hostname, never a hardcoded IP)
 

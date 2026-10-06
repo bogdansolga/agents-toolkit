@@ -1,6 +1,6 @@
 ---
-command: pr:review:local
-description: Dispatch a local agent to perform code review on current branch changes
+name: pr-review
+description: "Use when asked to review the current branch's changes before a PR or merge: dispatches a local agent code review. Read-only."
 ---
 
 # Local PR Review Agent
@@ -87,8 +87,8 @@ Dispatches a background agent to perform a comprehensive code review on all chan
 
 ```bash
 # Review against default base branch (main/master)
-/pr:review:local
+/pr-review
 
 # Review against specific base branch
-/pr:review:local develop
+/pr-review develop
 ```

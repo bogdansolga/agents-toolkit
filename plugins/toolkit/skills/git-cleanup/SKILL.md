@@ -1,5 +1,7 @@
 ---
-description: Delete local branches already merged to main/master
+name: git-cleanup
+description: "Delete local branches already merged to main/master"
+disable-model-invocation: true
 ---
 
 # Cleanup Merged Branches

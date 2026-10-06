@@ -1,6 +1,7 @@
 ---
-command: pr:merge
-description: Merge PR with squash, combining commit messages for catchup context
+name: pr-merge
+description: "Merge PR with squash, combining commit messages for catchup context"
+disable-model-invocation: true
 ---
 
 ## Description
@@ -25,7 +26,7 @@ Merges the current branch's PR with squash, combining all commit messages into a
    - Look for corresponding PRD files in `docs/plans/` for context
 
 4. **Determine Prefix**
-   - Analyze commit messages and changes to determine type (same scheme as `/git:commit`):
+   - Analyze commit messages and changes to determine type (same scheme as `/commit`):
      - `[feat]`: New features, enhancements, new functionality (incl. feature-enabling dependencies)
      - `[fix]`: Bug fixes, corrections, error-handling fixes
      - `[chore]`: Tooling, build, CI, config, dependency bumps, housekeeping

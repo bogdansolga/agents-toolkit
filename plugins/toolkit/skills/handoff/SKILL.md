@@ -1,9 +1,9 @@
 ---
-command: handoff:create
-description: Write a session-handoff doc so a fresh session can pick up cold.
+name: handoff
+description: "Use when ending a session, before a compaction, or when asked to write a handoff: writes a session-handoff doc so a fresh session can pick up cold."
 ---
 
-# /handoff:create
+# /handoff
 
 Write a self-contained handoff. A fresh session (or human) should be able to resume from this file alone.
 

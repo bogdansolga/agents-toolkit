@@ -1,6 +1,7 @@
 ---
-command: git:commit
-description: Create and apply a succinct commit message for current changes
+name: commit
+description: "Create and apply a succinct commit message for current changes"
+disable-model-invocation: true
 ---
 
 # Commit

@@ -1,5 +1,7 @@
 ---
-description: Sync the current branch with main/master, handling conflicts
+name: git-sync
+description: "Sync the current branch with main/master, handling conflicts"
+disable-model-invocation: true
 ---
 
 # Sync Branch with Main

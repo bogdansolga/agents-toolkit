@@ -1,6 +1,7 @@
 ---
-command: sync:to-laptop
-description: Mirror the current project to the laptop dev box (code + .git + .env), resolving the laptop by hostname (no hardcoded IP)
+name: sync-to-laptop
+description: "Mirror the current project to the laptop dev box (code + .git + .env), resolving the laptop by hostname (no hardcoded IP)"
+disable-model-invocation: true
 ---
 
 # Sync project → laptop
@@ -59,7 +60,7 @@ hardcoding one. Override the whole target with the `LAPTOP_HOST` env var (`user@
    ```
 
    Remote path defaults to `~/Development/Projects/<project-name>`; override by passing an explicit path as
-   the argument, e.g. `/sync:to-laptop ~/code/foo`.
+   the argument, e.g. `/sync-to-laptop ~/code/foo`.
 
 3. **Optional bootstrap** (only if the project uses bun and you want the laptop ready-to-run):
 
@@ -72,6 +73,6 @@ hardcoding one. Override the whole target with the `LAPTOP_HOST` env var (`user@
 ## Notes
 
 - ⚠️ This **overwrites the laptop's working tree** for the project. If the laptop may hold uncommitted work,
-  reconcile first (`/sync:from-laptop`) before running this.
+  reconcile first (`/sync-from-laptop`) before running this.
 - `.env` on the laptop is overwritten with this machine's `.env` (intended — keeps credentials in sync).
 - If a project ships its own committed sync script (e.g. `scripts/sync/sync-to-host.sh`), prefer it.

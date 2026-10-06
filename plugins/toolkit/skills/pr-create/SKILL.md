@@ -1,6 +1,7 @@
 ---
-command: pr:create
-description: Generate succinct PR summary and create pull request
+name: pr-create
+description: "Generate succinct PR summary and create pull request"
+disable-model-invocation: true
 ---
 
 ## Description
@@ -87,10 +88,10 @@ If no argument provided, use default git/gh authentication.
 
 ```bash
 # Create PR using default authentication
-/pr:create
+/pr-create
 
 # Create PR using a named SSH key (~/.ssh/<name>)
-/pr:create <ssh-key-name>
+/pr-create <ssh-key-name>
 ```
 
 ## Example Output

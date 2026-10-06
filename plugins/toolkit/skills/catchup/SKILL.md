@@ -1,6 +1,6 @@
 ---
-command: git:catchup
-description: Identify what was worked on in previous session(s)
+name: catchup
+description: "Use when starting a session or asked what was worked on recently: summarises previous sessions' work from git history and the working tree. Read-only."
 ---
 
 # Catchup

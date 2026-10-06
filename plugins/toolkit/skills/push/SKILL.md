@@ -1,5 +1,7 @@
 ---
-description: Push the current branch with this profile's Git identity (GIT_SSH_HOST)
+name: push
+description: "Push the current branch with this profile's Git identity (GIT_SSH_HOST)"
+disable-model-invocation: true
 ---
 
 # Push

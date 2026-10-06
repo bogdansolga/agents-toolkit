@@ -1,6 +1,6 @@
 # claude-config Restructure: One Plugin, Profile by Type of Work
 
-Date: 2026-10-06 · Status: implemented and installed in both profiles (toolkit 2.0.1)
+Date: 2026-10-06 · Status: implemented and installed in both profiles (toolkit 1.0.0)
 
 ## Goal
 
@@ -72,3 +72,4 @@ README.md                            install, update, profile env table
   - Nested plugin commands need it: `/git:catchup` isn't found, `/toolkit:git:catchup` is.
   - To be fully flat, the commands could become skills with flat names (`/commit`, `/push`, `/pull`, `/handoff-create`, `/pr-create`). Decide when refining.
 - **Fixed:** with `GOOGLE_PROFILE` unset, the Google scripts now name the missing variable. A legacy profile argument is still accepted when it matches the env; a different one exits 2 (`scripts/tests/google-profile.test.sh`).
+- **Done (1.0.0):** the 13 commands became flat skills. Seven side-effecting ones are user-only (`disable-model-invocation: true`): commit, push, pull, git-sync, git-cleanup, pr-create, pr-merge. Both sync-to/from-laptop skills are user-only too. Tested with `--plugin-dir`: Claude could invoke only the 8 auto skills, and the bare `/git-cleanup` resolved. The version was reset to 1.0.0 for the first published release.

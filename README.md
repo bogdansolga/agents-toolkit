@@ -27,7 +27,7 @@ claude plugin marketplace update bogdansolga
 claude plugin update toolkit@bogdansolga
 ```
 
-Restart running sessions to load the new version. Bump `version` in `plugins/toolkit/.claude-plugin/plugin.json` with every release; `update` compares versions.
+Restart running sessions to load the new version. Bump `version` in `plugins/toolkit/.claude-plugin/plugin.json` with every release; `update` compares versions, so it never downgrades. To go back to a lower version, uninstall and reinstall.
 
 ## Profile Env
 
@@ -37,7 +37,7 @@ Set these under `env` in each profile's `settings.json`:
 |---|---|---|---|
 | `GOOGLE_PROFILE` | `nix` | `personal` | `google` skill and scripts: the OAuth token is `~/.config/google/<profile>/token.json` |
 | `JIRA_ENV` | `/Users/bogdan/.config/nix/jira.env` | unset: no Jira | `jira` skill: the file holds `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN` (`chmod 600`) |
-| `GIT_SSH_HOST` | `github-nix` | unset: `github.com` | `git:push`, `git:pull`: the SSH alias for the identity |
+| `GIT_SSH_HOST` | `github-nix` | unset: `github.com` | `push`, `pull`: the SSH alias for the identity |
 | `TASKS_HUB` | `/Volumes/NVMe/Development/IdeaProjects/active/nix` | unset: no hub | `ongoing-tasks` skill |
 
 **Rules:**
@@ -57,34 +57,29 @@ Set these under `env` in each profile's `settings.json`:
 
 ### Skills
 
-Invoke a skill as `/<name>` (the `toolkit:` prefix is optional), or let Claude trigger it from the task.
+Every skill has a flat name: type `/<name>` (the `toolkit:` prefix is optional). **Auto** skills are also triggered by Claude when the task matches their description. **User-only** skills have side effects (`disable-model-invocation: true`), so they run only when you type them.
 
-| Skill | What it does |
-|---|---|
-| `ongoing-tasks` | Tracks and continues tasks in `$TASKS_HUB`: triage, add tasks, the 7-day rolling-window archive, per-task agents, deep sessions, handoffs, compaction stats. `references/contexts.md` holds the work model: clients (presales/upsales), internal services, and the AI Delivery Model levels (Acceleration L1/L2 → L3, Transformation L3 → L4). |
-| `google` | Google Docs, Sheets, Slides and Drive through the bundled scripts, with the `GOOGLE_PROFILE` account. |
-| `jira` | Jira Cloud issues, links, labels and comments through `jira.sh`, with the `JIRA_ENV` credentials. |
-| `ste100-80` | Writes or rewrites text "80% of the way" to ASD-STE100 Simplified Technical English. |
+| Skill | Trigger | What it does |
+|---|---|---|
+| `ongoing-tasks` | auto | Tracks and continues tasks in `$TASKS_HUB`: triage, add tasks, the 7-day rolling-window archive, per-task agents, deep sessions, handoffs, compaction stats. `references/contexts.md` holds the work model: clients (presales/upsales), internal services, and the AI Delivery Model levels (Acceleration L1/L2 → L3, Transformation L3 → L4). |
+| `google` | auto | Google Docs, Sheets, Slides and Drive through the bundled scripts, with the `GOOGLE_PROFILE` account |
+| `jira` | auto | Jira Cloud issues, links, labels and comments through `jira.sh`, with the `JIRA_ENV` credentials |
+| `ste100-80` | auto | Writes or rewrites text "80% of the way" to ASD-STE100 Simplified Technical English |
+| `catchup` | auto | Summarises what was worked on in previous sessions; read-only |
+| `handoff` | auto | Writes a session handoff so a fresh session can pick up cold |
+| `handoff-continue` | auto | Resumes from a handoff: read, verify, pick up |
+| `pr-review` | auto | Runs a local agent code review of the current branch; read-only |
+| `commit` | user-only | Writes a succinct commit message and commits the current changes |
+| `push` | user-only | Pushes the current branch with the profile's Git identity |
+| `pull` | user-only | Pulls the current branch, fast-forward only, with the profile's Git identity |
+| `git-sync` | user-only | Syncs the current branch with main/master, handling conflicts |
+| `git-cleanup` | user-only | Deletes local branches already merged to main/master |
+| `pr-create` | user-only | Writes a PR summary and creates the pull request |
+| `pr-merge` | user-only | Squash-merges a PR, combining the commit messages |
+| `sync-to-laptop` | user-only | Mirrors the current project to the laptop dev box (code, .git, .env) |
+| `sync-from-laptop` | user-only | Pulls the current project back from the laptop dev box |
 
-### Commands
-
-Commands keep their folder in the name and need the prefix: `/toolkit:git:commit`.
-
-| Command | What it does |
-|---|---|
-| `git:catchup` | Summarises what was worked on in previous sessions |
-| `git:cleanup` | Deletes local branches already merged to main/master |
-| `git:commit` | Writes a succinct commit message and commits the current changes |
-| `git:pull` | Pulls the current branch, fast-forward only, with the profile's Git identity |
-| `git:push` | Pushes the current branch with the profile's Git identity |
-| `git:sync` | Syncs the current branch with main/master, handling conflicts |
-| `handoff:create` | Writes a session handoff so a fresh session can pick up cold |
-| `handoff:continue` | Resumes from a handoff: read, verify, pick up |
-| `pr:create` | Writes a PR summary and creates the pull request |
-| `pr:merge` | Squash-merges a PR, combining the commit messages |
-| `pr:review` | Runs a local agent code review of the current branch |
-| `sync:to-laptop` | Mirrors the current project to the laptop dev box (code, .git, .env) |
-| `sync:from-laptop` | Pulls the current project back from the laptop dev box |
+The plugin has no commands; the 1.0 conversion turned them all into skills.
 
 ### Scripts
 
@@ -104,7 +99,7 @@ Tests: `bash plugins/toolkit/scripts/tests/compaction-stats.test.sh` and `bash p
 .claude-plugin/marketplace.json   the bogdansolga marketplace
 plugins/toolkit/                  the plugin
   .claude-plugin/plugin.json      name, version
-  skills/  commands/  scripts/
+  skills/  scripts/
 docs/superpowers/                 specs and plans
 archive/                          the pre-2.0 layout, for reference; nothing there is loaded
 CLAUDE.md                         rules for maintaining the plugin
@@ -112,6 +107,7 @@ CLAUDE.md                         rules for maintaining the plugin
 
 ## History
 
-`toolkit` 2.0 replaces the `nix` plugin of the `nix-config` marketplace (`nix:ongoing-tasks` is now `ongoing-tasks`). It also replaces the loose `~/.claude/commands` and `~/.claude/skills` copies.
-
-The retired skills (bid-response, cv-work-*, pptx-self-paced, anthropic-cert-mentor and the cert-tutor agent) hold personal content. They are kept only in the local backup, `~/.claude-config-backups/2026-10-06-restructure/`.
+- **1.0.0 (2026-10-06):** the version was reset to 1.0.0 for the first published release, after two internal iterations (2.0.0 and 2.0.1).
+  - `toolkit` replaces the `nix` plugin of the `nix-config` marketplace: `nix:ongoing-tasks` is now `ongoing-tasks`, and the Google and Jira skills read the profile env.
+  - It also replaces the loose `~/.claude/commands` and `~/.claude/skills` copies. The old commands are now flat skills: `/git:commit` became `/commit`, `/handoff:create` became `/handoff`, `/pr:review:local` became `/pr-review`.
+- **Retired:** bid-response, cv-work-*, pptx-self-paced, anthropic-cert-mentor and the cert-tutor agent. They hold personal content, so they are kept only in the local backup, `~/.claude-config-backups/2026-10-06-restructure/`.
