@@ -1,6 +1,6 @@
 # Handoff template
 
-Path: `<task folder>/docs/handoffs/YYYY-MM-DD-HHMM.md` (local time). For `(none)` tasks: `<tasks file folder>/handoffs/<#>/YYYY-MM-DD-HHMM.md`. Create the directory if missing.
+Path: `<task folder>/handoffs/YYYY-MM-DD-HHMM.md` (local time). The latest 3 stay live; older ones are archived by the rolling-window sweep (`references/archive.md`).
 
 Each handoff stands alone: a new session reads only this file and the task block. Write facts a cold reader needs, not a diary.
 
@@ -44,7 +44,7 @@ Written by the orchestrator for each task a subagent moved:
 
 ## After writing
 
-1. Add the path to the front of the block's Handoffs (keep 3).
-2. Update State, Decisions, Open, Next in the block; Status in the row.
-3. Append a row to the pilot log Observations table (`<tasks file folder>/ongoing-tasks-pilot.md`):
+1. Add the path to the front of the Handoffs line in `task.md` (keep 3).
+2. Update State, Decisions, Open and Next in `task.md`, and the Status in the index row.
+3. Append a row to the pilot log Observations table (the hub's `ongoing-tasks-pilot.md`):
    `| date | #<n> | mode | compactions | avg reduction | fallbacks | note |`

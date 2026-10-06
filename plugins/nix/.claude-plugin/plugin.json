@@ -1,6 +1,6 @@
 {
   "name": "nix",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "N-iX toolkit — Jira (nix:jira), Google Docs/Sheets/Drive (nix:google), ongoing-tasks workflow with handoffs and compaction stats (nix:ongoing-tasks), and git-with-nix-identity commands (nix:git:push / nix:git:pull). Bundles the CLI scripts under scripts/.",
   "author": {
     "name": "Bogdan Solga",

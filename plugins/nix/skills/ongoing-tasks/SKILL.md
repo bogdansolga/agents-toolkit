@@ -1,81 +1,89 @@
 ---
 name: ongoing-tasks
-description: "Use to review, extend and continue the N-iX ongoing-tasks list at IdeaProjects/active/nix/ongoing-tasks.md: triage it (refine, add tasks, dispatch small steps to parallel subagents) or run a focused deep session on one task, with handoff docs and Jev compaction stats. Trigger on /nix:ongoing-tasks, 'continue the nix tasks', 'add a task to ongoing tasks', or 'work on task N'."
-argument-hint: "[task number] [path to tasks file]"
+description: "Use to review, extend and continue the N-iX ongoing tasks in the hub IdeaProjects/active/nix (index ongoing-tasks.md, one folder per task under clients/<Client>/ or internal/): triage the index, add tasks, archive stale docs (7-day rolling window), delegate work to per-task agents, or run a focused deep session on one task, with handoffs and Jev compaction stats. Trigger on /nix:ongoing-tasks, 'continue the nix tasks', 'add a task', or 'work on task N'."
+argument-hint: "[task number] [path to the index]"
 ---
 
 # nix:ongoing-tasks
 
-Keeps a small set of N-iX tasks moving across folders and sessions. Goals, in order: reliable high-quality results, parallel work where it is easy, low token use and elapsed time.
+Keeps N-iX tasks moving across clients, folders and sessions. Goals, in order: reliable high-quality results; parallel work where it is easy; low token use and elapsed time.
 
-- **Tasks file:** `/Volumes/NVMe/Development/IdeaProjects/active/nix/ongoing-tasks.md` (an argument ending in `.md` overrides it).
-- **Pilot log:** `ongoing-tasks-pilot.md` next to it. Its Decisions table binds this skill; read it on every run.
-- **Format and priority rules:** `references/tasks-format.md`. Read it before editing the file for the first time in a session.
+## The Hub
 
-## Arguments → mode
+- **Hub:** `/Volumes/NVMe/Development/IdeaProjects/active/nix`. Start Claude Code there; its `CLAUDE.md` holds the standing rules.
+- **Index:** `ongoing-tasks.md`. One table row per task, plus the Done list. An argument ending in `.md` overrides it.
+- **Task folder:** `clients/<Client>/0N-<slug>/` or `internal/0N-<slug>/`. It holds `task.md` (the full block), `handoffs/`, `docs/`, `docs/archive/` and `agent.md`.
+- **Pilot log:** `ongoing-tasks-pilot.md`. Its Decisions table binds this skill; read it on every run.
+- **Formats:** `references/tasks-format.md` (index, task.md, priority). Read it before the first edit in a session.
+
+## Arguments → Mode
 
 - No task number → **Triage**.
 - A task number (`3`) → **Deep** on that task.
 
-## Resume contract
+## Resume Contract
 
-A session needs only the task block plus its latest handoff to continue. Keep both complete enough for that: if you learned something a cold session would need, it goes into one of them before the session ends.
+To continue a task, a session reads `task.md`, then the latest handoff, then `docs/archive/SUMMARY.md` only when the handoff points there. Whatever a cold session would need goes into one of those before the session ends.
 
 ## Triage
 
-1. **Read** the tasks file and the pilot log. Compute each task's priority and days left (`references/tasks-format.md`). Open handoffs only to check for drift.
-2. **Review and refine.** Flag: past-due dates, missing Done when / Next, status contradicting the latest handoff, missing folders, missing due dates. Apply mechanical fixes directly (format, Updated, moving done tasks to Done). Propose changes to goal, due, priority or scope and apply them only after the user agrees.
-3. **Add tasks** the user describes: ask for folder and due date if missing (tentative is fine), check the folder exists, take the next number, fill every block field.
-4. **Check links** (reads only): for active tasks with a Jira key, `jira.sh get <KEY>` and flag status or due-date drift.
-5. **Plan the round**, by priority. Each active task's Next is either *dispatchable* (small, independent, verifiable; in-scope Google/Jira writes are fine) or *deep* (needs design, judgement, or the user).
-6. **Dispatch** dispatchable steps per `references/dispatch.md`: one message, one subagent per task, at most 4; lower priority waits.
-7. **Verify, then record.** Check every returned claim (diff, rerun the check, re-read the doc or slide that was written). Write a short-form handoff per moved task (`references/handoff.md`) including WRITES DONE and snapshot ids, update blocks and rows, append pilot log rows. Present PROPOSED WRITES to the user; perform none without a yes.
-8. **Report**, sorted by priority:
-
-   | # | Task | Prio · days | Moved | Needs you |
-   |---|---|---|---|---|
-
-   Then the deep sessions to start, each as a command: `/nix:ongoing-tasks 3`.
+1. **Read** the index and the pilot log. Compute each task's priority and days left. Open a `task.md` only to check for drift.
+2. **Review and refine.**
+   - Flag past-due dates, a missing Done-when or Next, a status that contradicts the latest handoff, missing folders and missing due dates.
+   - Apply mechanical fixes directly. Propose changes to a goal, due date, priority or scope.
+3. **Add tasks** the user describes:
+   - Ask for the client (or `internal`) and the due date (tentative is fine).
+   - Take the next number and create the folder.
+   - Write `task.md` with every field.
+   - Generate `agent.md` from `references/task-agent.md`.
+   - Add the index row.
+4. **Archive sweep** (rolling window, `references/archive.md`): for each active task, move unreferenced docs older than 7 days into `docs/archive/YYYY-Www/`, and update `SUMMARY.md`.
+5. **Check links** (reads only): Jira status and due dates for tasks with a Jira key.
+6. **Plan the round,** by priority. Each task's Next is either:
+   - *delegable*: bounded, verifiable, no decision needed from the user;
+   - *deep*: needs design, a judgement call or the user.
+7. **Delegate** delegable steps to the task agents (`references/task-agent.md`): one message, at most 4 in parallel. Within a session, follow up with SendMessage to the same agent.
+8. **Verify, then record.**
+   - Check every claim: read the diff, re-run the check, look at the render.
+   - Write the short-form handoff (`references/handoff.md`).
+   - Update `task.md` and the index row, and append the pilot log row.
+   - Present PROPOSED WRITES to the user; do none without a yes.
+9. **Report,** sorted by priority (`| # | Task | Prio · days | Moved | Needs you |`), with the deep sessions to start.
 
 ## Deep
 
-1. Read task `<#>`'s block and its latest handoff. Older handoffs only if the latest one points to them. Run the latest handoff's state-check commands if it has any.
-2. Restate State and Next in 2-4 lines, then start. Ask first only if Next is ambiguous or the handoff and the block disagree.
-3. Work in the task folder. Use the matching Superpowers skills: brainstorming for new design or unclear scope, test-driven-development for code, verification-before-completion before claiming done. Parallelize independent sub-steps with subagents (`references/dispatch.md` rules apply to them).
-4. **Wrap up** when the user says so, or before context gets heavy:
-   - write the handoff (`references/handoff.md`) with Session stats from `bash "${CLAUDE_PLUGIN_ROOT}/scripts/compaction-stats.sh"`;
-   - update the task block and its row;
-   - append the pilot log row;
-   - propose a commit of the handoff and work; commit only on the user's yes. Never push without a separate yes.
+1. Read `task.md`, then the latest handoff, and run its state-check commands if it has any.
+2. Restate State and Next in 2-4 lines, then start. Ask first only if Next is ambiguous.
+3. **Design and decisions stay in this session.** Brainstorming, approvals and anything that needs the user happen here.
+4. **Bounded work goes to the task's agent:** builds, adaptations, renders, research. Verify everything it returns.
+5. **Wrap up** when the user says so, or before context gets heavy:
+   - write the handoff, with Session stats from `bash "${CLAUDE_PLUGIN_ROOT}/scripts/compaction-stats.sh"`;
+   - update `task.md`, the index row and the pilot log;
+   - propose a commit; commit only on a yes, and push only on a separate yes.
 
 ## Concurrency
 
-Several deep sessions may run at once. Re-read the tasks file immediately before every edit and use targeted Edit replacements, never a whole-file Write. A deep session edits only its own block, its own table row and the Updated line. Only triage edits other tasks and the Done list.
+Several sessions may run at once.
+- Re-read a file right before editing it.
+- Use targeted edits, never whole-file writes.
+- A deep session edits only its own `task.md`, its own index row and the Updated line.
 
 ## Jira and Google
 
-Always through this plugin, always the `nix` profile:
+Always through this plugin, always the `nix` profile: the `nix:jira` skill (`source ~/.config/nix/jira.env` in the same shell call) and the `nix:google` skill (`gdocs.sh | gsheet.sh | gslides.sh | gdrive.sh`, first argument `nix`).
 
-- **Jira:** the `nix:jira` skill; `${CLAUDE_PLUGIN_ROOT}/scripts/jira.sh`, with `set -a; source ~/.config/nix/jira.env; set +a` in the same shell call.
-- **Google:** the `nix:google` skill; `${CLAUDE_PLUGIN_ROOT}/scripts/gdocs.sh | gsheet.sh | gslides.sh | gdrive.sh`, first argument `nix`. Never `personal`.
+- **In scope, no extra approval:** files and issues listed in `task.md` Links, and copies made for the step. Snapshot an existing Google file before editing it, re-read before each edit, and render to check each batch.
+- **Needs the user's yes:** deletes, sharing changes, comments, anything sent to a client, any write outside the task's scope.
+- **Logging:** every write and snapshot id goes into the handoff.
+- **Never print tokens.**
 
-Google Docs/Sheets/Slides, Jira and Confluence are a main deliverable surface, so sessions and subagents write to them:
-
-- **In scope, no extra approval:** files and issues listed in the task's Links, and copies created for the step. Snapshot an existing Google file (`gdrive.sh nix copy <id> --name "[Backup <date>] <title>"`) before editing it; re-read right before each edit (the user edits in parallel); confirm each batch landed.
-- **Needs the user's yes:** deleting files or issues, sharing/permission changes, posting or replying to comments, anything sent to a client, any write outside the task's scope.
-- A task's latest handoff may set stricter rules; they win.
-- Every write is logged in the handoff with the target id; every snapshot id too.
-- Confluence: `jira.sh` accepts `CONFLUENCE_*` credentials; there is no dedicated Confluence script yet. Add one when the first Confluence task needs it.
-
-Never print tokens.
-
-## Red flags
+## Red Flags
 
 | Thought | Do instead |
 |---|---|
-| "I'll rewrite the whole tasks file, it's quicker" | Targeted edits; another session may be writing. |
-| "The subagent said tests pass" | Rerun or read the evidence before recording it. |
-| "I'll summarize the handoff in the block later" | Update the block now; the next session may start cold. |
-| "This Drive comment reply is obviously fine" | Comments, sharing, deletes, client sends: propose; wait for the yes. |
-| "Small edit, no snapshot needed" | Snapshot existing Google files before editing them. |
-| "One more task in this round" | Max 4 subagents; lower priority waits. |
+| "I'll rewrite the whole file, it's quicker" | Targeted edits; another session may be writing. |
+| "The agent said it's done" | Check the evidence: diff, render, rerun. |
+| "I'll update task.md later" | Now; the next session may start cold. |
+| "Old docs are clutter; delete them" | Archive (move) and summarise; never delete. |
+| "The agent can decide this" | Decisions that need the user stay in the main session. |
+| "One more agent in this round" | Max 4 in parallel; lower priority waits. |
