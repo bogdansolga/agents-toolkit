@@ -20,7 +20,8 @@ Bundled with this plugin under `${CLAUDE_PLUGIN_ROOT}/scripts/` — always refer
 
 The active Claude profile sets `GOOGLE_PROFILE` in its `settings.json` `env`: `nix` in the work profile, `personal` in the personal one. The scripts read it and use `~/.config/google/$GOOGLE_PROFILE/token.json`, refreshing the short-lived access token. Never pass a profile argument and never switch accounts inside a session; the type of work decides the account.
 
-- If `GOOGLE_PROFILE` is unset, the scripts stop with an error. Tell the user to set it in this profile's settings; don't guess an account.
+- If `GOOGLE_PROFILE` is unset, the scripts stop with an error that names it. Tell the user to set it in this profile's settings; don't guess an account.
+- Old docs call the scripts with a profile first (`gdocs.sh nix read …`). That still works when the argument matches `GOOGLE_PROFILE`; a different profile stops with exit 2. Write new calls without it.
 - `TOKEN_PATH` overrides everything, for one-off use.
 
 ## Commands (gdocs.sh)

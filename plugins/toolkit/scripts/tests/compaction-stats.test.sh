@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Tests for compaction-stats.sh. Run: bash plugins/nix/scripts/tests/compaction-stats.test.sh
+# Tests for compaction-stats.sh. Run: bash plugins/toolkit/scripts/tests/compaction-stats.test.sh
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 S="$HERE/../compaction-stats.sh"

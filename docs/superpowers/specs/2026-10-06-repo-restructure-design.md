@@ -1,6 +1,6 @@
 # claude-config Restructure: One Plugin, Profile by Type of Work
 
-Date: 2026-10-06 · Status: approved, implemented on branch `restructure`
+Date: 2026-10-06 · Status: implemented and installed in both profiles (toolkit 2.0.1)
 
 ## Goal
 
@@ -71,4 +71,4 @@ README.md                            install, update, profile env table
   - Skills resolve without the prefix: `/ste100-80` ran.
   - Nested plugin commands need it: `/git:catchup` isn't found, `/toolkit:git:catchup` is.
   - To be fully flat, the commands could become skills with flat names (`/commit`, `/push`, `/pull`, `/handoff-create`, `/pr-create`). Decide when refining.
-- With `GOOGLE_PROFILE` unset, the Google scripts take the first argument as the profile and print usage, instead of naming the missing variable. Tighten this when refining.
+- **Fixed:** with `GOOGLE_PROFILE` unset, the Google scripts now name the missing variable. A legacy profile argument is still accepted when it matches the env; a different one exits 2 (`scripts/tests/google-profile.test.sh`).
