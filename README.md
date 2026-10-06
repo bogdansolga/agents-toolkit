@@ -1,4 +1,4 @@
-# claude-config
+# agents-toolkit
 
 A Claude Code marketplace, `bogdansolga`, with one plugin, `toolkit`, installed in every profile. The type of work picks the identity: the active profile's `settings.json` `env` decides which Google account, Jira instance, Git identity and task hub are used. No command or skill names a profile.
 
@@ -12,7 +12,7 @@ A Claude Code marketplace, `bogdansolga`, with one plugin, `toolkit`, installed 
 In each profile (prefix with `CLAUDE_CONFIG_DIR=~/.claude-nix` for the work profile):
 
 ```bash
-claude plugin marketplace add bogdansolga/claude-config
+claude plugin marketplace add bogdansolga/agents-toolkit
 claude plugin install toolkit@bogdansolga
 ```
 
@@ -107,6 +107,7 @@ CLAUDE.md                         rules for maintaining the plugin
 
 ## History
 
+- **Repo:** renamed from `bogdansolga/claude-config` to `bogdansolga/agents-toolkit` on 2026-10-06. GitHub redirects the old URL.
 - **1.0.0 (2026-10-06):** the version was reset to 1.0.0 for the first published release, after two internal iterations (2.0.0 and 2.0.1).
   - `toolkit` replaces the `nix` plugin of the `nix-config` marketplace: `nix:ongoing-tasks` is now `ongoing-tasks`, and the Google and Jira skills read the profile env.
   - It also replaces the loose `~/.claude/commands` and `~/.claude/skills` copies. The old commands are now flat skills: `/git:commit` became `/commit`, `/handoff:create` became `/handoff`, `/pr:review:local` became `/pr-review`.

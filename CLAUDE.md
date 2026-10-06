@@ -1,4 +1,4 @@
-# claude-config: Maintaining the Toolkit Plugin
+# agents-toolkit: Maintaining the Toolkit Plugin
 
 This repo is the `bogdansolga` Claude Code marketplace, with one plugin: `plugins/toolkit`. `README.md` holds the full reference: the install and update commands, the profile env table, the Git identities, and every skill and script.
 

@@ -1,6 +1,6 @@
 # claude-config Restructure: One Plugin, Profile by Type of Work
 
-Date: 2026-10-06 · Status: implemented and installed in both profiles (toolkit 1.0.0)
+Date: 2026-10-06 · Status: implemented and installed in both profiles (toolkit 1.0.0). The repo was renamed to `bogdansolga/agents-toolkit` afterwards.
 
 ## Goal
 
