@@ -77,6 +77,7 @@ Every skill has a flat name: type `/<name>` (the `toolkit:` prefix is optional).
 | `pull` | user-only | Pulls the current branch, fast-forward only, with the profile's Git identity |
 | `git-sync` | user-only | Syncs the current branch with main/master, handling conflicts |
 | `git-cleanup` | user-only | Deletes local branches already merged to main/master |
+| `pr-review-ci` | user-only | Asks the Claude GitHub Action to review a PR (posts a PR comment) and summarizes its findings by priority |
 | `pr-create` | user-only | Writes a PR summary and creates the pull request |
 | `pr-merge` | user-only | Squash-merges a PR, combining the commit messages |
 | `sync-to-laptop` | user-only | Mirrors the current project to the laptop dev box (code, .git, .env) |
