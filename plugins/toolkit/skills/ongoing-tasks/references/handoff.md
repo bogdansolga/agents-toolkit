@@ -8,7 +8,7 @@ Each handoff stands alone: a new session reads only this file and the task block
 # Task <#>: <title> (handoff YYYY-MM-DD HH:MM)
 
 ## Done this session
-- What changed, with paths, commits, Jira keys, doc links.
+- What changed, with paths, commits, Jira keys (if the profile has Jira), doc links.
 
 ## Verified
 - Commands run and their results (tests, builds, rendered checks, re-read docs).

@@ -24,27 +24,27 @@
 #      - Checked state is NOT controllable via API — checkboxes are always unchecked when created
 #
 # Examples:
-#   gdocs.sh get 1pS2xf1C-917RLc6-EAO9baXPPd4aZCVw21PHpeLwM_4
-#   gdocs.sh read 1pS2xf1C-917RLc6-EAO9baXPPd4aZCVw21PHpeLwM_4
-#   gdocs.sh append 1pS2xf1C-917RLc6-EAO9baXPPd4aZCVw21PHpeLwM_4 "New paragraph text"
-#   gdocs.sh replace 1pS2xf1C-917RLc6-EAO9baXPPd4aZCVw21PHpeLwM_4 "OLD_TEXT" "NEW_TEXT"
+#   gdocs.sh get DOC_ID
+#   gdocs.sh read DOC_ID
+#   gdocs.sh append DOC_ID "New paragraph text"
+#   gdocs.sh replace DOC_ID "OLD_TEXT" "NEW_TEXT"
 #   gdocs.sh create "Meeting Notes — 2026-04-02"
-#   gdocs.sh checkbox 1pS2xf1C... 208 433   # Convert lines at indices 208-433 to checkboxes
+#   gdocs.sh checkbox DOC_ID 208 433   # Convert lines at indices 208-433 to checkboxes
 
 set -euo pipefail
 
 # Token resolution: explicit TOKEN_PATH wins; else GOOGLE_PROFILE -> ~/.config/google/<profile>/token.json
-# (e.g. GOOGLE_PROFILE=n-ix); else the legacy mcp-google-sheets default.
+# (e.g. GOOGLE_PROFILE=work); else the legacy mcp-google-sheets default.
 if [ -z "${TOKEN_PATH:-}" ]; then
   # Account: GOOGLE_PROFILE, set in the Claude profile's settings.json env. A legacy first arg
-  # naming a profile (nix, personal) is still accepted and dropped; it must match GOOGLE_PROFILE.
+  # naming a profile (work, personal) is still accepted and dropped; it must match GOOGLE_PROFILE.
   if [ -n "${1:-}" ] && [ -d "$HOME/.config/google/$1" ]; then
     if [ -n "${GOOGLE_PROFILE:-}" ] && [ "$1" != "$GOOGLE_PROFILE" ]; then
       echo "Profile arg '$1' conflicts with GOOGLE_PROFILE=$GOOGLE_PROFILE; this Claude profile uses $GOOGLE_PROFILE." >&2; exit 2
     fi
     GOOGLE_PROFILE="$1"; shift
   fi
-  : "${GOOGLE_PROFILE:?GOOGLE_PROFILE is not set: add it to the env of this Claude profile settings.json (nix or personal)}"
+  : "${GOOGLE_PROFILE:?GOOGLE_PROFILE is not set: add it to the env of this Claude profile settings.json (e.g. work or personal)}"
   export GOOGLE_PROFILE
   TOKEN_PATH="$HOME/.config/google/${GOOGLE_PROFILE}/token.json"
 fi
@@ -371,7 +371,7 @@ Commands:
                                            (defaults: A4 portrait 0.5)
 
 Account selection:
-  GOOGLE_PROFILE=n-ix gdocs.sh ...         Use ~/.config/google/n-ix/token.json
+  GOOGLE_PROFILE=work gdocs.sh ...         Use ~/.config/google/work/token.json
   TOKEN_PATH=/path/token.json gdocs.sh ... Use an explicit token file
 
 Checkbox workflow (two-step):
@@ -380,12 +380,12 @@ Checkbox workflow (two-step):
      Use read-json to find character indices.
 
 Examples:
-  gdocs.sh get 1pS2xf1C-917RLc6-EAO9baXPPd4aZCVw21PHpeLwM_4
-  gdocs.sh read 1pS2xf1C-917RLc6-EAO9baXPPd4aZCVw21PHpeLwM_4
-  gdocs.sh append 1pS2xf1C... "New paragraph text"
-  gdocs.sh replace 1pS2xf1C... "OLD_TEXT" "NEW_TEXT"
+  gdocs.sh get DOC_ID
+  gdocs.sh read DOC_ID
+  gdocs.sh append DOC_ID "New paragraph text"
+  gdocs.sh replace DOC_ID "OLD_TEXT" "NEW_TEXT"
   gdocs.sh create "Meeting Notes — 2026-04-16"
-  gdocs.sh checkbox 1pS2xf1C... 208 433
+  gdocs.sh checkbox DOC_ID 208 433
 
 Related scripts:
   md2gdoc.sh      Convert Markdown file to formatted Google Doc

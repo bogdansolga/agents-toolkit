@@ -32,14 +32,14 @@ set -euo pipefail
 # Token: explicit TOKEN_PATH wins; else GOOGLE_PROFILE -> ~/.config/google/<profile>/token.json; else legacy default.
 if [ -z "${TOKEN_PATH:-}" ]; then
   # Account: GOOGLE_PROFILE, set in the Claude profile's settings.json env. A legacy first arg
-  # naming a profile (nix, personal) is still accepted and dropped; it must match GOOGLE_PROFILE.
+  # naming a profile (work, personal) is still accepted and dropped; it must match GOOGLE_PROFILE.
   if [ -n "${1:-}" ] && [ -d "$HOME/.config/google/$1" ]; then
     if [ -n "${GOOGLE_PROFILE:-}" ] && [ "$1" != "$GOOGLE_PROFILE" ]; then
       echo "Profile arg '$1' conflicts with GOOGLE_PROFILE=$GOOGLE_PROFILE; this Claude profile uses $GOOGLE_PROFILE." >&2; exit 2
     fi
     GOOGLE_PROFILE="$1"; shift
   fi
-  : "${GOOGLE_PROFILE:?GOOGLE_PROFILE is not set: add it to the env of this Claude profile settings.json (nix or personal)}"
+  : "${GOOGLE_PROFILE:?GOOGLE_PROFILE is not set: add it to the env of this Claude profile settings.json (e.g. work or personal)}"
   export GOOGLE_PROFILE
   TOKEN_PATH="$HOME/.config/google/${GOOGLE_PROFILE}/token.json"
 fi

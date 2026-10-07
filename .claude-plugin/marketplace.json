@@ -7,7 +7,7 @@
     {
       "name": "toolkit",
       "source": "./plugins/toolkit",
-      "description": "Ongoing tasks, Google, Jira, STE writing; git, handoff, pr and sync commands. One plugin for every profile."
+      "description": "Task hub, Google Workspace, Jira, STE writing, git, handoff, PR and laptop-sync skills. One plugin for every profile."
     }
   ],
   "description": "Bogdan Solga's Claude Code toolkit: one plugin for every profile."

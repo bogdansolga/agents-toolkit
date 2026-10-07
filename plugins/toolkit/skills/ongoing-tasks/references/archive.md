@@ -6,7 +6,7 @@ Keep each task folder small. A new session should load only what still matters.
 
 - The latest 3 handoffs.
 - Every file that `task.md` (Links, State, Decisions, Next) or the latest handoff names.
-- Files marked as living in `task.md` (for example `Living: docs/deck-uniformization-2026-10-05.md`). These are change logs that keep growing; they are never archived.
+- Files marked as living in `task.md` (for example `Living: docs/changelog.md`). These are change logs that keep growing; they are never archived.
 
 ## The Sweep (Triage Step 4, or on Request)
 
@@ -28,7 +28,7 @@ For each task folder:
    **Files:**
    | File | One line |
    |---|---|
-   | `2026-W40/2026-09-30-1706.md` | Handoff: WP pricing, Option A history |
+   | `2026-W40/2026-09-30-1706.md` | Handoff: pricing options, history |
    ```
 
 4. **Fix the links:** if `task.md` or a live handoff still names a moved file, the file was live; move it back. Never leave a broken link.

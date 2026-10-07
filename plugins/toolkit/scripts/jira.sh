@@ -16,16 +16,16 @@
 #   jira.sh types       PROJECT_KEY                           # list creatable issue types for a project
 #
 # Examples:
-#   jira.sh get VVLK-125
-#   jira.sh get-text VVLK-125
-#   jira.sh search "project = VVLK AND statusCategory != Done ORDER BY created DESC"
-#   jira.sh create VVLK Task "D3 — authoring/trigger surface" /tmp/desc.txt
-#   jira.sh link VVLK-201 VVLK-200            # VVLK-201 blocks VVLK-200 (VVLK-200 depends on VVLK-201)
-#   jira.sh attach VVLK-200 docs/reviews/latest/d3-authoring-trigger-surface.md
+#   jira.sh get PROJ-125
+#   jira.sh get-text PROJ-125
+#   jira.sh search "project = PROJ AND statusCategory != Done ORDER BY created DESC"
+#   jira.sh create PROJ Task "D3 — authoring/trigger surface" /tmp/desc.txt
+#   jira.sh link PROJ-201 PROJ-200            # PROJ-201 blocks PROJ-200 (PROJ-200 depends on PROJ-201)
+#   jira.sh attach PROJ-200 docs/reviews/latest/d3-authoring-trigger-surface.md
 #
 # Environment (searched upward for a .env, like confluence.sh):
-#   JIRA_URL         — e.g. https://n-ix-nordic.atlassian.net   (falls back to CONFLUENCE_URL minus /wiki)
-#   JIRA_USERNAME    — e.g. bsolga@n-ix.com                     (falls back to CONFLUENCE_USERNAME)
+#   JIRA_URL         — e.g. https://your-domain.atlassian.net (falls back to CONFLUENCE_URL minus /wiki)
+#   JIRA_USERNAME    — e.g. you@company.com                     (falls back to CONFLUENCE_USERNAME)
 #   JIRA_API_TOKEN   — Atlassian API token                      (falls back to CONFLUENCE_API_TOKEN)
 
 set -euo pipefail

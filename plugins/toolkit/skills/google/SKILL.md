@@ -18,10 +18,10 @@ Bundled with this plugin under `${CLAUDE_PLUGIN_ROOT}/scripts/` — always refer
 
 ## Auth: The Profile Picks the Account
 
-The active Claude profile sets `GOOGLE_PROFILE` in its `settings.json` `env`: `nix` in the work profile, `personal` in the personal one. The scripts read it and use `~/.config/google/$GOOGLE_PROFILE/token.json`, refreshing the short-lived access token. Never pass a profile argument and never switch accounts inside a session; the type of work decides the account.
+The active Claude profile sets `GOOGLE_PROFILE` in its `settings.json` `env`: `work` (for example) in the work profile, `personal` in the personal one. The scripts read it and use `~/.config/google/$GOOGLE_PROFILE/token.json`, refreshing the short-lived access token. Never pass a profile argument and never switch accounts inside a session; the type of work decides the account.
 
 - If `GOOGLE_PROFILE` is unset, the scripts stop with an error that names it. Tell the user to set it in this profile's settings; don't guess an account.
-- Old docs call the scripts with a profile first (`gdocs.sh nix read …`). That still works when the argument matches `GOOGLE_PROFILE`; a different profile stops with exit 2. Write new calls without it.
+- Old docs call the scripts with a profile first (`gdocs.sh work read …`). That still works when the argument matches `GOOGLE_PROFILE`; a different profile stops with exit 2. Write new calls without it.
 - `TOKEN_PATH` overrides everything, for one-off use.
 
 ## Commands (gdocs.sh)
@@ -72,4 +72,4 @@ The `#slide=id.pN` fragment is the slide's objectId — `pN` is the N-th slide (
 - `read-json` returns the **`body.content` array**, not the whole document object — index it directly; `documentStyle`/margins are **not** in that output (set them blind via `batch`; the request still succeeds).
 - `batch` expects a **JSON array of request objects**; the script wraps it as `{requests: [...]}`. Style updates return empty `{}` replies on success.
 - Markdown pasted into Google Docs brings Heading styles with large space-above — that (not word count) is usually why a short doc spills to 2 pages; fix with the formatting `batch` above.
-- Confidentiality: work content stays in work contexts; don't copy N-iX docs into personal repos.
+- Confidentiality: work content stays in work contexts; don't copy work docs into personal repos.

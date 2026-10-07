@@ -10,10 +10,15 @@ Pull the **current git project** **from the laptop** back to this machine — th
 
 ## Peer registry (resolve by hostname, never a hardcoded IP)
 
-| Machine | mDNS hostname | ssh user |
-|---------|---------------|----------|
-| Laptop  | `NB01GAVL003` | `bsolga` |
-| Studio  | `MacStudio`   | `bogdan` |
+The laptop comes from the profile env:
+
+| Variable | Meaning | Example |
+|---|---|---|
+| `LAPTOP_HOSTNAME` | the laptop's mDNS hostname (without `.local`) | `my-laptop` |
+| `LAPTOP_SSH_USER` | the ssh user on the laptop | `me` |
+| `LAPTOP_HOST` | optional: a full `user@host` that skips resolution | `me@192.168.1.20` |
+
+If neither `LAPTOP_HOST` nor `LAPTOP_HOSTNAME` is set, stop and tell the user to set them in this profile's settings.
 
 The remote peer for this command is the **laptop**. IPs change, so resolve it on the network instead of
 hardcoding one. Override the whole target with the `LAPTOP_HOST` env var (`user@host`) to skip resolution.
@@ -31,10 +36,10 @@ mirror). Local uncommitted changes here will be lost — guard before pulling.
 2. **Resolve the laptop's address.** Try mDNS (`<hostname>.local`); only ask for an IP if that fails:
 
    ```bash
-   USER_AT="bsolga"; HOSTNAME_SHORT="NB01GAVL003"
+   USER_AT="${LAPTOP_SSH_USER:-$USER}"; HOSTNAME_SHORT="${LAPTOP_HOSTNAME:-}"
    if [ -n "${LAPTOP_HOST:-}" ]; then
      echo "RESOLVED: $LAPTOP_HOST"
-   elif ping -c1 -t2 "$HOSTNAME_SHORT.local" >/dev/null 2>&1; then
+   elif [ -n "$HOSTNAME_SHORT" ] && ping -c1 -t2 "$HOSTNAME_SHORT.local" >/dev/null 2>&1; then
      echo "RESOLVED: $USER_AT@$HOSTNAME_SHORT.local"
    else
      echo "UNRESOLVED: laptop '$HOSTNAME_SHORT' not found on the network via mDNS"
@@ -42,9 +47,7 @@ mirror). Local uncommitted changes here will be lost — guard before pulling.
    ```
 
    - If it prints `RESOLVED: <host>`, use that as `HOST` below.
-   - If it prints `UNRESOLVED`, **ask the user for the laptop's IP address**, then use `HOST="bsolga@<ip>"`.
-     (Apply the same hostname→`.local`→ask-for-IP resolution to the **Studio** if you target it instead:
-     `bogdan@MacStudio.local`.)
+   - If it prints `UNRESOLVED`, **ask the user for the laptop's IP address**, then use `HOST="$USER_AT@<ip>"`.
 
 3. **Pull** (network + writes to the local tree → run with the sandbox disabled). Fails loudly if the remote
    project is missing:

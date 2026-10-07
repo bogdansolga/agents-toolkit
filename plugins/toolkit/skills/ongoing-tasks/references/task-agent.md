@@ -13,13 +13,13 @@ Each task folder has an `agent.md`: a thin brief the main session passes to a su
 3. <task folder>/docs/archive/SUMMARY.md, only if the handoff points there
 
 ## Standing Rules for This Task
-- <rules learned on this task, e.g. "rhythm line: Theory and practice interleaved, on your own codebase">
-- <e.g. "content exclusion: do not rely on it in the CLI or agent mode">
-- Hub rules: IdeaProjects/active/nix/CLAUDE.md
+- <rules learned on this task, e.g. "the agenda line is exactly: <the agreed wording>">
+- <e.g. "a product fact, in its verified wording">
+- Hub rules: $TASKS_HUB/CLAUDE.md
 
 ## Write Scope
 - Allowed: <Google file ids, repos, folders>; snapshot existing Google files first.
-- Never: delete, share, comment, send to a client, push, commit (unless the step says so).
+- Never: delete, share, comment, send anything outside (clients, partners, public), push, commit (unless the step says so).
 
 ## Return (≤15 lines)
 CHANGED · WRITES DONE (ids, snapshots) · VERIFIED (command or render → result) · PROPOSED WRITES · NEXT · BLOCKERS
@@ -35,5 +35,5 @@ CHANGED · WRITES DONE (ids, snapshots) · VERIFIED (command or render → resul
 ## What Stays in the Main Session
 
 - Brainstorming, design choices, priorities, anything that needs the user.
-- Decisions about Google, Jira or Git actions that need a yes.
+- Decisions about Google, Jira (when the profile has it) or Git actions that need a yes.
 - Writing `task.md`, the index and the handoff. The agent proposes; the main session records.

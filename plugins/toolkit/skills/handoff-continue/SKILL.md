@@ -1,6 +1,6 @@
 ---
 name: handoff-continue
-description: "Use when resuming work or asked to continue from a handoff: finds the latest session-handoff doc, verifies it against the repo, and picks up."
+description: "Use when resuming work or asked to continue from a handoff: reads the project's rolling HANDOFF.md (or, as a fallback, the newest timestamped handoff), verifies it against the repo, and picks up."
 ---
 
 # /handoff-continue
@@ -12,12 +12,11 @@ Resume a prior session: read its handoff, verify it still reflects reality, surf
 ## Steps
 
 1. **Locate the handoff** (in order):
-   - `$ARGUMENTS` if path-shaped
-   - Most recent `<repo>/docs/handoffs/*.md` by mtime
-   - `<repo>/HANDOFF.md` (rolling-snapshot pattern)
-   - `<repo>/docs/**/HANDOFF.md` or `docs/**/*handoff*.md`
-   - Multiple plausible candidates → list + ask. Don't guess.
-   - None found → say so, suggest running `/handoff` at end of next session, then fall back to `/catchup`-style reconstruction (`git log` + `status` + `diff`).
+   - `$ARGUMENTS`, if it's a path.
+   - **The rolling `HANDOFF.md` first:** `<repo>/docs/handoffs/HANDOFF.md`, `<repo>/HANDOFF.md`, or a `docs/**/HANDOFF.md` that `CLAUDE.md` or the README names. If one exists, use it, even when timestamped files are newer.
+   - **Fallback, for repos not migrated yet:** the newest `<repo>/docs/handoffs/YYYY-MM-DD-HHMM.md`, then `docs/**/*handoff*.md`. Mention that the next `/handoff` will migrate it to `HANDOFF.md`.
+   - Several plausible candidates → list them and ask. Don't guess.
+   - None found → say so, suggest running `/handoff` at the end of the next session, then fall back to `/catchup`-style reconstruction (`git log` + `status` + `diff`).
 
 2. **Read it fully.** Then run its §"State-check on entry" commands. If absent: `git log --oneline -15`, `git status -s`, plus an obvious build/test/health command for the stack.
 

@@ -12,10 +12,10 @@ Push the **current branch** to `origin` with the Git identity of the active prof
 
 | Profile | `GIT_SSH_HOST` | Account | Key |
 |---|---|---|---|
-| personal | unset (`github.com`) | `bogdansolga` | `~/.ssh/id_*` |
-| work | `github-nix` | `bsolga` | `~/.ssh/nix` |
+| personal | unset (`github.com`) | your personal account | `~/.ssh/id_*` |
+| work | an SSH alias, e.g. `github-work` | your work account | e.g. `~/.ssh/work` |
 
-`github-nix` is an SSH alias (`HostName github.com`, `IdentityFile ~/.ssh/nix`, `IdentitiesOnly yes`). A "Repository not found" error on a work repo means the personal key answered.
+The work alias is a `~/.ssh/config` entry (`HostName github.com`, `IdentityFile ~/.ssh/work`, `IdentitiesOnly yes`). A "Repository not found" error on a work repo means the personal key answered.
 
 ## Steps
 
@@ -23,7 +23,7 @@ Push the **current branch** to `origin` with the Git identity of the active prof
 2. **Normalize `origin`, only when needed:** read `git remote get-url origin`.
    - If `H` isn't `github.com` and the URL is `git@github.com:<org>/<repo>.git` or `https://github.com/<org>/<repo>.git`, rewrite it: `git remote set-url origin git@$H:<org>/<repo>.git`.
    - If it already uses `git@$H:`, leave it.
-   - In the personal profile, never rewrite a `github-nix` remote back; stop and tell the user that this repo belongs to the work profile.
+   - In the personal profile, never rewrite a remote that uses the work alias back; stop and tell the user that this repo belongs to the work profile.
 3. **Push:** `git push --set-upstream origin "$(git branch --show-current)"`.
 4. **Report** the pushed branch, the ahead/behind result and the PR-create URL GitHub prints.
 

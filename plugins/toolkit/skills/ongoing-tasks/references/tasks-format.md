@@ -9,8 +9,8 @@ Updated: 2026-10-06
 
 | # | Task | Folder | Due | Prio | Status |
 |---|------|--------|-----|------|--------|
-| 1 | Short title | `clients/presales/active/UTA/01-context-layer` | ~2026-10-10 |  | active |
-| 4 | Short title | `internal/aws-funding/04-apex-funding` | 2026-10-14 | P1 | todo |
+| 1 | Short title | `clients/presales/active/Acme/01-discovery` | ~2026-10-10 |  | active |
+| 4 | Short title | `tasks/apps/04-budget-export` | 2026-10-14 | P1 | todo |
 
 ## Done
 
@@ -19,7 +19,7 @@ Updated: 2026-10-06
 
 ## The Task Folder
 
-`clients/<presales|upsales>/<active|inactive>/<Client>/0N-<slug>/` (the client's real name, no spaces) or `internal/<service>/0N-<slug>/`. `references/contexts.md` says which context, domain and service a task belongs to:
+`<context folder>/0N-<slug>/`, with the folder patterns from `$TASKS_HUB/contexts.md`, e.g. in a work hub `clients/<group>/<status>/<Client>/0N-<slug>/` (the client's real name, no spaces) or `internal/<service>/0N-<slug>/`; in a personal hub `tasks/<area>/0N-<slug>/`:
 
 ```
 task.md          the full block (below)
@@ -29,19 +29,19 @@ docs/            working docs
 docs/archive/    YYYY-Www/ folders plus SUMMARY.md (references/archive.md)
 ```
 
-Deliverables (code, repos, decks) stay where they live: in client repos, under `projects/`, or in Google. `task.md` links to them.
+Deliverables (code, repos, decks) stay where they live: in their repos, under `projects/`, or in Google. `task.md` links to them.
 
 ## task.md
 
 ```markdown
 # <#>. Short title
 
-<!-- Paths are relative to this task folder; paths starting with clients/, internal/ or projects/ are relative to the hub. -->
+<!-- Paths are relative to this task folder; paths starting with a top-level hub folder (e.g. clients/, internal/, projects/, tasks/) are relative to the hub. -->
 
 - **Goal:** one line, the outcome.
-- **Engagement:** `Acceleration (L2 → L3)` or `Transformation (L3 → L4)`, then ` · service: <slug>` (references/contexts.md).
+- **Engagement:** the classification from `$TASKS_HUB/contexts.md`, e.g. `<domain> (<move>) · service: <slug>`.
 - **Done when:** one line, a checkable condition.
-- **Links:** Google ids or URLs, repos, Jira keys, `docs/...`.
+- **Links:** Google ids or URLs, repos, Jira keys (work), `docs/...`.
 - **Living:** change logs that are never archived (optional).
 - **State:** 2-4 lines: what works, what is half-done.
 - **Decisions:** dated one-liners that must not be re-litigated.
