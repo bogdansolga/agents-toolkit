@@ -5,16 +5,17 @@
 ```markdown
 # Ongoing Tasks
 
-Updated: 2026-10-06
+Updated: 2026-10-06 · status-synced 2026-10-06
 
 | # | Task | Folder | Due | Prio | Status |
 |---|------|--------|-----|------|--------|
 | 1 | Short title | `clients/presales/active/Acme/01-discovery` | ~2026-10-10 |  | active |
+| 2 | Short title | `clients/presales/active/Acme/02-review` | 2026-10-20 |  | waiting: Acme CTO (nudge 2026-10-09) |
 | 4 | Short title | `tasks/apps/04-budget-export` | 2026-10-14 | P1 | todo |
 
 ## Done
 
-- 5. Short title: one-line result (2026-10-12).
+- 5. Short title: one-line result, DOC_ID (2026-10-12).
 ```
 
 ## The Task Folder
@@ -58,7 +59,30 @@ Deliverables (code, repos, decks) stay where they live: in their repos, under `p
 | Folder | Hub-relative. |
 | Due | ISO date. A `~` prefix means tentative. Every task has one. |
 | Prio | Empty means computed. `P1`-`P3` is a user override that always wins; record its reason in Decisions. |
-| Status | `todo`, `active`, `blocked: <reason>` or `done`. |
+| Status | `todo`, `active`, `waiting: <who> (nudge YYYY-MM-DD)`, `blocked: <reason>` or `done`. See § Status. |
+
+## Status
+
+| Status | Meaning | Priority from |
+|---|---|---|
+| `todo` | not started | due date |
+| `active` | in progress | due date |
+| `waiting: <who> (nudge YYYY-MM-DD)` | the next move is someone else's | the nudge date |
+| `blocked: <reason>` | cannot move, and not waiting on a person | due date |
+| `done` | finished; the row moves to Done | - |
+
+- **Nudge default:** 3 working days from today, unless the user gives a date.
+- `<who>` is a name or a short role, with no parentheses in `<who>` (write `Acme, CTO`, not `Acme (CTO)`), so the `(nudge …)` part stays the only parenthesis.
+- A `waiting:` row without `(nudge …)` (old or hand-edited): treat the nudge as today + 3 working days and propose the fix.
+- A waiting task never gets an overdue flag. On or after its nudge date, triage proposes a follow-up: who to ping and a one-line draft. It never sends.
+
+## The Updated Line
+
+`Updated: YYYY-MM-DD · status-synced YYYY-MM-DD`. `Updated` changes on every write to the index; `status-synced` changes only when a triage Step 0 is confirmed. An index without `status-synced` has never been synced.
+
+## Machine-Parseable
+
+The index and `task.md` stay machine-parseable: one row per task, the column order above, the status prefixes above, the field labels above. A minimal web app for the Step 0 sync is under evaluation and would read and write these same files; do not add free-form variants.
 
 ## Priority (Computed When Read, Never Stored)
 
@@ -70,8 +94,10 @@ Deliverables (code, repos, decks) stay where they live: in their repos, under `p
 | P2 | `days <= 7` |
 | P3 | later |
 
+For a waiting task, priority comes from the nudge date: apply the same table to it instead of the due date.
+
 **Sort order:** priority, then fewer days left, then firm dates before tentative ones. Display it as `P1 (override) · 3d`, `P2 · 5d`, or for overdue `P1 · -2d`.
 
 ## Done
 
-Triage moves a done task's row to the Done list: `- <#>. <title>: <result> (<date>)`. Its folder stays where it is.
+Close-out (`references/handoff.md` § Close-out) moves a done task's row to the Done list: `- <#>. <Title>: <result>, <key link or id> (<date>)`. Its folder stays where it is.

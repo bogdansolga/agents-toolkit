@@ -42,6 +42,20 @@ Written by the orchestrator for each task a subagent moved:
 - Mode: triage-dispatch · subagent
 ```
 
+## Close-out
+
+Written when a task moves to `done` (Step 0 or a deep session), in the same batch as the index change:
+
+```markdown
+# Task <#>: <title> (handoff YYYY-MM-DD HH:MM, close-out)
+
+## Result
+## Key links
+## Left as reference
+```
+
+Then: set `task.md` Next to `none; done <date>: <result>`; add new links to Links; move the index row to Done (`references/tasks-format.md` § Done). No archive sweep is forced.
+
 ## After writing
 
 1. Add the path to the front of the Handoffs line in `task.md` (keep 3).

@@ -64,7 +64,7 @@ Every skill has a flat name: type `/<name>` (the `toolkit:` prefix is optional).
 
 | Skill | Trigger | What it does |
 |---|---|---|
-| `ongoing-tasks` | auto | Tracks and continues tasks in `$TASKS_HUB`: triage, add tasks, the 7-day rolling-window archive, per-task agents, deep sessions, handoffs, compaction stats. Each hub's private model (e.g. client and internal folders at work, areas at home) lives in it as `$TASKS_HUB/contexts.md`; `references/contexts.md` is its template. |
+| `ongoing-tasks` | auto | Tracks and continues tasks in `$TASKS_HUB`: a status sync first (Step 0, with waiting states and close-out), triage with a cross-task conflicts check, choose-by-number dispatch, add tasks, the 7-day rolling-window archive, per-task agents, deep sessions, handoffs, compaction stats. Each hub's private model (e.g. client and internal folders at work, areas at home) lives in it as `$TASKS_HUB/contexts.md`; `references/contexts.md` is its template. |
 | `google` | auto | Google Docs, Sheets, Slides and Drive through the bundled scripts, with the `GOOGLE_PROFILE` account |
 | `jira` | auto | Jira Cloud issues, links, labels and comments through `jira.sh`, with the `JIRA_ENV` credentials |
 | `ste100-80` | auto | Writes or rewrites text "80% of the way" to ASD-STE100 Simplified Technical English |
@@ -95,7 +95,7 @@ These live in `plugins/toolkit/scripts/`; skills call them through `${CLAUDE_PLU
 | `jira.sh` | Jira Cloud REST |
 | `compaction-stats.sh` | Session duration and compaction numbers (built-in vs Jev) from a transcript |
 
-Tests: `bash plugins/toolkit/scripts/tests/compaction-stats.test.sh` and `bash plugins/toolkit/scripts/tests/google-profile.test.sh` (offline).
+Tests: `bash plugins/toolkit/scripts/tests/compaction-stats.test.sh`, `bash plugins/toolkit/scripts/tests/google-profile.test.sh` and `bash plugins/toolkit/scripts/tests/ongoing-tasks-skill.test.sh` (offline).
 
 ## Repository Layout
 
