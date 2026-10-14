@@ -94,6 +94,7 @@ These live in `plugins/toolkit/scripts/`; skills call them through `${CLAUDE_PLU
 | `gdocs.sh`, `gslides.sh`, `gsheet.sh`, `gdrive.sh`, `gdoc2md.py` | Google APIs with curl and jq. The account is `GOOGLE_PROFILE`. A legacy first argument (`gdocs.sh work read …`) still works when it matches; a different one exits 2. |
 | `jira.sh` | Jira Cloud REST |
 | `compaction-stats.sh` | Session duration and compaction numbers (built-in vs Jev) from a transcript |
+| `pi-harness/` | A toolkit and playbook for running local LLMs as coding agents, improved with hill-climbing evals: Pi as a scripted, sandboxed agent (tool-result cap extension, self-contained Pi config, macOS sandbox profile, local-GPU lock, snapshot, disk guard). See `pi-harness/README.md`, then `IMPLEMENTING.md` (plans for Pi to execute) or `EVAL-METHOD.md` (measuring it). |
 
 Tests: `bash plugins/toolkit/scripts/tests/compaction-stats.test.sh` and `bash plugins/toolkit/scripts/tests/google-profile.test.sh` (offline).
 

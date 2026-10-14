@@ -2,6 +2,8 @@
 
 This repo is the `bogdansolga` Claude Code marketplace, with one plugin: `plugins/toolkit`. `README.md` holds the full reference: the install and update commands, the profile env table, the Git identities, and every skill and script.
 
+It also holds **pi-harness** (`plugins/toolkit/scripts/pi-harness/`): a toolkit and playbook for running local LLMs as coding agents (the Pi agent on Ollama, sandboxed), improved round by round with hill-climbing evals. The local model takes the bounded execution work; Claude keeps the planning, review and creative work.
+
 ## Rules
 
 - **One plugin, every profile.** Never add a profile name to a skill or script. Anything that differs between work and personal goes through a profile env variable (`GOOGLE_PROFILE`, `JIRA_ENV`, `GIT_SSH_HOST`, `TASKS_HUB`, `LAPTOP_*`); add new ones to the README env table.
@@ -12,6 +14,10 @@ This repo is the `bogdansolga` Claude Code marketplace, with one plugin: `plugin
 - **Names:** plugin names can't start with `claude-` (reserved). Skills resolve without the `toolkit:` prefix; commands in folders need it. So everything is a skill with a flat, hyphenated name (`git-sync`, `pr-create`); add no `commands/`. Avoid built-in command names (`/review`, `/init`, `/compact`, …).
 - **Every skill needs frontmatter:** `name`, and a `description` that says when to use it.
 - **Side effects mean user-only.** A skill that commits, pushes, merges, deletes, syncs or sends anything gets `disable-model-invocation: true`; Claude can't trigger it, only the user can type it. Read-only and write-a-local-doc skills stay auto. Record the choice in the README Trigger column.
+
+## pi-harness (Local Model)
+
+`plugins/toolkit/scripts/pi-harness/` runs the Pi agent on a local model in a sandbox. Before planning work for it, read its `README.md`, then `IMPLEMENTING.md` (how to shape a plan Pi executes) or `EVAL-METHOD.md` (how to measure it). Update `IMPLEMENTING.md` with what each real run teaches.
 
 ## Release Checklist
 

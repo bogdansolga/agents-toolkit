@@ -1,0 +1,14 @@
+;; macOS sandbox for one agent trial: sandbox-exec -f sandbox.sb -D REPO=... -D HUB=... -D USERHOME=...
+;;   -D CLAUDEDIR=... -D BUNDIR=... <command>
+;; Everything is allowed except reading or writing the places that hold answers or secrets: the
+;; real repo (future commits, hidden tests, .env), its parent workspace, the user's home and the
+;; resolved Claude data dir. Keep the trial's snapshot, HOME and TMPDIR outside all of them.
+;; Pass the same path twice when a parameter doesn't apply (e.g. HUB=REPO).
+(version 1)
+(allow default)
+(deny file-read* file-write* (subpath (param "REPO")))
+(deny file-read* file-write* (subpath (param "HUB")))
+(deny file-read* file-write* (subpath (param "USERHOME")))
+(deny file-read* file-write* (subpath (param "CLAUDEDIR")))
+;; Exceptions after the denies (later rules win): bun's install dir, read-only.
+(allow file-read* (subpath (param "BUNDIR")))
