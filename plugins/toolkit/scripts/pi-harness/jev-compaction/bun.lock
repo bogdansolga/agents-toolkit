@@ -1,0 +1,15 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "pi-jev-compaction",
+      "dependencies": {
+        "fast-jev-compaction": "0.4.1",
+      },
+    },
+  },
+  "packages": {
+    "fast-jev-compaction": ["fast-jev-compaction@0.4.1", "", { "bin": { "jev-qa": "cli/jev-qa.mjs", "jev-find": "cli/jev-find.mjs", "jev-setup": "cli/jev-setup.mjs" } }, "sha512-JQkOlfl9wDzvhaxIIkyGO8QxBpkOesvcsUR5fg0CTpNrQ+hxpcFlOTBa4TM74sUR8k7s0kmm49w35Mg3VECy/A=="],
+  }
+}

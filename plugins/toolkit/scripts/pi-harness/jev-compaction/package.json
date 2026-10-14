@@ -1,0 +1,9 @@
+{
+  "name": "pi-jev-compaction",
+  "private": true,
+  "type": "module",
+  "description": "Pi extension: Jev decisions instead of Pi's LLM summary at compaction",
+  "dependencies": {
+    "fast-jev-compaction": "0.4.1"
+  }
+}
