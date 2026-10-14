@@ -1,10 +1,14 @@
 # pi-harness: Pi As A Scripted, Sandboxed Agent For Evals
 
+A toolkit and playbook for running local LLMs as coding agents, improved round by round with hill-climbing evals.
+
 **Why:** the better the local model gets at execution (edits, fixes, docs, checks), the more of the strong model's time goes to creative and planning work (`EVAL-METHOD.md`, "Why").
 
 **Overview:** `docs/local-model-overview.html` at the repo root (one self-contained page: the stack, Jev, the loop, quality by round). **Local model:** [Ollama](https://ollama.com/), [Qwen3.6](https://ollama.com/library/qwen3.6).
 
 **Method:** `EVAL-METHOD.md` (trial anatomy, grader, context budget, staged strategy, storage, guide surfaces, shared results log).
+
+**Implementing a plan with Pi:** `IMPLEMENTING.md` (runner and work dir, model, task size, task text with the "Before You Finish" guide, what works inside the sandbox, what to keep out of Pi's loop, machine limits). Read it before writing a plan for Pi to execute.
 
 Run the Pi coding agent non-interactively on local or cheap models, with nothing from the caller's machine in reach. Built for eval runners (fixed task in, graded diff out); also usable by hand through `try-pi.sh`.
 
