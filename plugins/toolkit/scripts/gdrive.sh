@@ -16,6 +16,7 @@
 #   gdrive.sh mkdir <name> [--parent FOLDER_ID]
 #   gdrive.sh export <fileId> [--mime text/markdown] [--out FILE]
 #   gdrive.sh update <fileId> <file> [--as-doc]      # replace existing file's content
+#   gdrive.sh import-formats [--to <google-mime>]     # source formats Drive converts on upload
 #
 # Examples:
 #   gdrive.sh upload deck.pptx                          # raw upload into My Drive
@@ -24,6 +25,7 @@
 #   gdrive.sh update 1I9WX... notes.md --as-doc         # same URL, content replaced
 #   gdrive.sh mkdir "Project Workshop"
 #   gdrive.sh list --query "name contains 'Workshop'"
+#   gdrive.sh import-formats --to application/vnd.google-apps.drawing   # what can become a Drawing
 #
 set -euo pipefail
 
@@ -220,7 +222,23 @@ cmd_update() {
   echo "$resp" | jq .
 }
 
-usage() { sed -n '2,28p' "$0" | sed 's/^# \{0,1\}//'; }
+# List the source formats Drive converts to native Google types on upload (about.importFormats).
+# --to keeps only the sources that convert to one target type, e.g. application/vnd.google-apps.drawing.
+cmd_import_formats() {
+  local to="" access
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --to) to="$2"; shift 2 ;;
+      *)    die "unknown arg: $1" ;;
+    esac
+  done
+  access="$(access_token)"
+  curl -s "https://www.googleapis.com/drive/v3/about?fields=importFormats" \
+    -H "Authorization: Bearer $access" \
+    | jq --arg to "$to" '.importFormats | if $to == "" then . else with_entries(select(.value | index($to))) end'
+}
+
+usage() { sed -n '2,29p' "$0" | sed 's/^# \{0,1\}//'; }
 
 [ $# -ge 1 ] || { usage; exit 1; }
 sub="$1"; shift
@@ -230,6 +248,7 @@ case "$sub" in
   mkdir)  cmd_mkdir "$@" ;;
   export) cmd_export "$@" ;;
   update) cmd_update "$@" ;;
+  import-formats) cmd_import_formats "$@" ;;
   -h|--help|help) usage ;;
-  *)      die "unknown subcommand: $sub (try: upload | list | mkdir | export | update)" ;;
+  *)      die "unknown subcommand: $sub (try: upload | list | mkdir | export | update | import-formats)" ;;
 esac
