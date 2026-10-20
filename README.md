@@ -94,8 +94,9 @@ These live in `plugins/toolkit/scripts/`; skills call them through `${CLAUDE_PLU
 | `gdocs.sh`, `gslides.sh`, `gsheet.sh`, `gdrive.sh`, `gdoc2md.py` | Google APIs with curl and jq. The account is `GOOGLE_PROFILE`. A legacy first argument (`gdocs.sh work read …`) still works when it matches; a different one exits 2. |
 | `jira.sh` | Jira Cloud REST |
 | `compaction-stats.sh` | Session duration and compaction numbers (built-in vs Jev) from a transcript |
+| `slides_diagram.py`, `slides_diagram_example.py` | Box-and-arrow diagrams as native, editable Google Slides shapes: a spec calls `box`, `frame`, `label` and `path`, and prints `batchUpdate` requests for `gslides.sh batch`. The example is a complete spec to copy. |
 
-Tests: `bash plugins/toolkit/scripts/tests/compaction-stats.test.sh`, `bash plugins/toolkit/scripts/tests/google-profile.test.sh` and `bash plugins/toolkit/scripts/tests/ongoing-tasks-skill.test.sh` (offline).
+Tests: `bash plugins/toolkit/scripts/tests/compaction-stats.test.sh`, `bash plugins/toolkit/scripts/tests/google-profile.test.sh`, `bash plugins/toolkit/scripts/tests/ongoing-tasks-skill.test.sh` and `bash plugins/toolkit/scripts/tests/slides-diagram.test.sh` (offline).
 
 ## Repository Layout
 

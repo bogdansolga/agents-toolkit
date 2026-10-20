@@ -20,6 +20,7 @@ This repo is the `bogdansolga` Claude Code marketplace, with one plugin: `plugin
    - `bash plugins/toolkit/scripts/tests/compaction-stats.test.sh`
    - `bash plugins/toolkit/scripts/tests/google-profile.test.sh`
    - `bash plugins/toolkit/scripts/tests/ongoing-tasks-skill.test.sh`
+   - `bash plugins/toolkit/scripts/tests/slides-diagram.test.sh`
 3. Validate with `claude plugin validate .` and `claude plugin validate plugins/toolkit`.
 4. Try it for one session without installing: `claude --plugin-dir plugins/toolkit`. Ask Claude to list the toolkit skills it can invoke; the user-only ones must not appear.
 5. Bump `version` in `plugins/toolkit/.claude-plugin/plugin.json`, and update `README.md` when a skill, script or env variable changes.

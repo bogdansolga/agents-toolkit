@@ -11,3 +11,4 @@ plugins/known_marketplaces.json
 **/.env
 */.env
 **/token.json
+__pycache__/
